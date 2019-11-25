@@ -6,7 +6,7 @@ return [
     'password'  => '', # 访问密码，为空不需要密码
     'prompt' => '', //温馨提示信息
     'delimiter' => '-', //分割符默认'-',
-    'readme' => 'https://github.com/fudanda/think5-apidoc-new',
+    'readme' => 'https://github.com/fudanda/think-apidoc',
     'document'  => [
         "explain" => [
             'name' => '说明',
