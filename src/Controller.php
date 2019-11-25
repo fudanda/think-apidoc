@@ -155,7 +155,6 @@ class Controller
     {
 
         list($class, $action) = explode("::", $name);
-        halt($name);
         $method = (new \ReflectionClass($class))->getMethod($action);
         $res = (new Extractor())->parseAction($method);
         if ($this->request->isAjax()) {
