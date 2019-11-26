@@ -12,18 +12,17 @@ if (defined('THINK_VERSION')) {
     \think\Route::any('doc/login$', "\\FuDanDa\\ApiDoc\\Controller@login");
     \think\Route::any('doc/format_params', "\\FuDanDa\\ApiDoc\\Controller@format_params");
 } else {
-    \think\Route::any('doc$', function () {
+    \think\facade\Route::any('doc$', function () {
         return redirect('/doc/document?name=explain');
     });
-    \think\Route::get('doc/assets', "\\FuDanDa\\ApiDoc\\Controller@assets", ['deny_ext' => 'php|.htacess']);
-    \think\Route::get('doc/assetss', "\\FuDanDa\\ApiDoc\\Controller@assetss", ['deny_ext' => 'php|.htacess']);
+    \think\facade\Route::get('doc/assets', "\\FuDanDa\\ApiDoc\\Controller@assets", ['deny_ext' => 'php|.htacess']);
+    \think\facade\Route::get('doc/assetss', "\\FuDanDa\\ApiDoc\\Controller@assetss", ['deny_ext' => 'php|.htacess']);
 
-
-    \think\Route::get('doc/module', "\\FuDanDa\\ApiDoc\\Controller@module");
-    \think\Route::get('doc/action', "\\FuDanDa\\ApiDoc\\Controller@action");
-    \think\Route::get('doc/document', "\\FuDanDa\\ApiDoc\\Controller@document");
-    \think\Route::any('doc/login$', "\\FuDanDa\\ApiDoc\\Controller@login");
-    \think\Route::any('doc/format_params', "\\FuDanDa\\ApiDoc\\Controller@format_params");
+    \think\facade\Route::get('doc/module', "\\FuDanDa\\ApiDoc\\Controller@module");
+    \think\facade\Route::get('doc/action', "\\FuDanDa\\ApiDoc\\Controller@action");
+    \think\facade\Route::get('doc/document', "\\FuDanDa\\ApiDoc\\Controller@document");
+    \think\facade\Route::any('doc/login$', "\\FuDanDa\\ApiDoc\\Controller@login");
+    \think\facade\Route::any('doc/format_params', "\\FuDanDa\\ApiDoc\\Controller@format_params");
 }
 
 # 当前URL
