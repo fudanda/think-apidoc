@@ -1,28 +1,33 @@
 <?php
-if (defined('THINK_VERSION')) {
-    \think\Route::get('doc$', function () {
-        return redirect('/doc/document?name=explain');
-    });
-    \think\Route::get('doc/assets', "\\FuDanDa\\ApiDoc\\DocController@assets", ['deny_ext' => 'php|.htacess']);
-    \think\Route::get('doc/assetss', "\\FuDanDa\\ApiDoc\\DocController@assetss", ['deny_ext' => 'php|.htacess']);
 
-    \think\Route::get('doc/module', "\\FuDanDa\\ApiDoc\\Controller@module");
-    \think\Route::get('doc/action', "\\FuDanDa\\ApiDoc\\Controller@action");
-    \think\Route::get('doc/document', "\\FuDanDa\\ApiDoc\\\Controller@document");
-    \think\Route::any('doc/login$', "\\FuDanDa\\ApiDoc\\Controller@login");
-    \think\Route::any('doc/format_params', "\\FuDanDa\\ApiDoc\\Controller@format_params");
-} else {
-    \think\facade\Route::any('doc$', function () {
-        return redirect('/doc/document?name=explain');
-    });
-    \think\facade\Route::get('doc/assets', "\\FuDanDa\\ApiDoc\\Controller@assets", ['deny_ext' => 'php|.htacess']);
-    \think\facade\Route::get('doc/assetss', "\\FuDanDa\\ApiDoc\\Controller@assetss", ['deny_ext' => 'php|.htacess']);
+use FuDanDa\ApiDoc\Utils;
 
-    \think\facade\Route::get('doc/module', "\\FuDanDa\\ApiDoc\\Controller@module");
-    \think\facade\Route::get('doc/action', "\\FuDanDa\\ApiDoc\\Controller@action");
-    \think\facade\Route::get('doc/document', "\\FuDanDa\\ApiDoc\\Controller@document");
-    \think\facade\Route::any('doc/login$', "\\FuDanDa\\ApiDoc\\Controller@login");
-    \think\facade\Route::any('doc/format_params', "\\FuDanDa\\ApiDoc\\Controller@format_params");
+if (config('app.app_debug') || config('api_config.maintenance')) {
+    if (defined('THINK_VERSION')) {
+        \think\Route::get('doc$', function () {
+            return redirect('/doc/document?name=explain');
+        });
+        \think\Route::get('doc/assets', "\\FuDanDa\\ApiDoc\\DocController@assets", ['deny_ext' => 'php|.htacess']);
+        \think\Route::get('doc/assetss', "\\FuDanDa\\ApiDoc\\DocController@assetss", ['deny_ext' => 'php|.htacess']);
+
+        \think\Route::get('doc/module', "\\FuDanDa\\ApiDoc\\Controller@module");
+        \think\Route::get('doc/action', "\\FuDanDa\\ApiDoc\\Controller@action");
+        \think\Route::get('doc/document', "\\FuDanDa\\ApiDoc\\\Controller@document");
+        \think\Route::any('doc/login$', "\\FuDanDa\\ApiDoc\\Controller@login");
+        \think\Route::any('doc/format_params', "\\FuDanDa\\ApiDoc\\Controller@format_params");
+    } else {
+        \think\facade\Route::any('doc$', function () {
+            return redirect('/doc/document?name=explain');
+        });
+        \think\facade\Route::get('doc/assets', "\\FuDanDa\\ApiDoc\\Controller@assets", ['deny_ext' => 'php|.htacess']);
+        \think\facade\Route::get('doc/assetss', "\\FuDanDa\\ApiDoc\\Controller@assetss", ['deny_ext' => 'php|.htacess']);
+
+        \think\facade\Route::get('doc/module', "\\FuDanDa\\ApiDoc\\Controller@module");
+        \think\facade\Route::get('doc/action', "\\FuDanDa\\ApiDoc\\Controller@action");
+        \think\facade\Route::get('doc/document', "\\FuDanDa\\ApiDoc\\Controller@document");
+        \think\facade\Route::any('doc/login$', "\\FuDanDa\\ApiDoc\\Controller@login");
+        \think\facade\Route::any('doc/format_params', "\\FuDanDa\\ApiDoc\\Controller@format_params");
+    }
 }
 
 # 当前URL
@@ -37,6 +42,48 @@ if (!function_exists("get_url")) {
     }
 }
 
+if (!function_exists('jwt_json')) {
+    /**
+     * JWT 验证json
+     * @param mixed $data
+     * @param string $token
+     * @return json
+     */
+    function jwt_json($data, $token = null)
+    {
+        $data['token'] = $token;
+        return json($data);
+    }
+}
+
+if (!function_exists('jwt_encode')) {
+    /**
+     * 获取加密token
+     * @param [array]  $data     用户信息
+     * @param [string] $key      密钥
+     * @param [int]    $expiration_time     过期时间
+     * @param [string] $arithmetic     加密算法默认-HS256-[HS256,HS384,HS512,RS256,RS384,RS512]
+     * @param [array]  $payload  配置
+     * @return string
+     */
+    function jwt_encode($data = null, $key = null, $expiration_time = null, $arithmetic = null, $payload = null)
+    {
+        return  Utils::jwt_encode($data, $key, $expiration_time, $arithmetic, $payload);
+    }
+}
+if (!function_exists('jwt_decode')) {
+    /**
+     * 解密token
+     * @param [array]  $token     jwt信息
+     * @param [string] $key      密钥
+     * @param [string]    $arithmetic     加密算法默认-HS256-[HS256,HS384,HS512,RS256,RS384,RS512]
+     * @return string
+     */
+    function jwt_decode($token = null,  $key = null, $arithmetic = null)
+    {
+        return  Utils::jwt_decode($token,  $key, $arithmetic);
+    }
+}
 # 驼峰转下划线
 if (!function_exists("hump_to_line")) {
     function hump_to_line($str)

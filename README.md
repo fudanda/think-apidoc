@@ -10,6 +10,10 @@
 
 * 暂无
 
+## 依赖
+
+* firebase/php-jwt
+
 ## 安装
 
 ~~~shell
@@ -19,3 +23,49 @@ composer require fdd/think-apidoc
 ## 使用
 
 [Demo](./Demo.php)
+
+## jwt使用
+
+```php
+<?php
+use FuDanDa\ApiDoc\Utils;
+
+$key = "example_key";
+$payload = array(
+    "iss" => "http://example.org",
+    "aud" => "http://example.com",
+    "iat" => 1356999524,
+    "nbf" => 1357000000
+);
+
+ //加密token:
+ Utils::jwt_encode();
+
+ //自定义
+ /**
+    * @param [array]  $data     用户信息
+    * @param [string] $key      密钥
+    * @param [int]    $expiration_time     过期时间
+    * @param [string] $arithmetic     加密算法默认-HS256-[HS256,HS384,HS512,RS256,RS384,RS512]
+    * @param [array]  $payload  配置
+ */
+Utils::jwt_encode($data, $key, $expiration_time, $arithmetic, $payload);
+//助手函数
+jwt_encode();
+
+
+
+ //解密token:
+ Utils::jwt_decode();
+
+ //自定义
+/**
+* @param [array]  $token     jwt信息
+* @param [string] $key      密钥
+* @param [string]    $arithmetic     加密算法默认-HS256-[HS256,HS384,HS512,RS256,RS38RS512]
+* @return string
+*/
+Utils::jwt_decode($token,  $key, $arithmetic);
+ //助手函数
+ jwt_decode();
+```

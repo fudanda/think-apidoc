@@ -7,6 +7,8 @@ return [
     'prompt' => '', //温馨提示信息
     'delimiter' => '-', //分割符默认'-',
     'readme' => 'https://github.com/fudanda/think-apidoc',
+    'maintenance' => false, //是否开启文档
+    'jwtkey' => 'https://github.com/fudanda/think-apidoc', //jwt密钥
     'document'  => [
         "explain" => [
             'name' => '说明',
