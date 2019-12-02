@@ -31,12 +31,18 @@ composer require fdd/think-apidoc
 use FuDanDa\ApiDoc\Utils;
 
 $key = "example_key";
-$payload = array(
-    "iss" => "http://example.org",
-    "aud" => "http://example.com",
-    "iat" => 1356999524,
-    "nbf" => 1357000000
-);
+$nowtime = time();
+$expiration_time = 7200
+$payload = [
+    'iss'  => 'http://example.com', //签发者
+    'aud'  => 'http://example.com', //jwt所面向的用户
+    'iat'  => $nowtime,            //签发时间
+    'nbf'  => $nowtime,            //在什么时间之后该jwt才可用
+    'exp'  => $nowtime + $expiration_time, //过期时间-120分钟
+    'sub'  => '',                  //主题
+    'jti'  => '',                   //JWT ID用于标识该JWT
+    'data' => $data,                //自定义信息
+];
 
  //加密token:
  Utils::jwt_encode();
