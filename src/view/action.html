@@ -386,9 +386,8 @@
                         $.ajax({
                             url: data.field.url,
                             type: data.field.method,
-                            headers: response.header,
+                            // headers: response.header,
                             data: response.params,
-
                             complete: function (XHR) {
                                 layer.close(index);
                                 var html = "";

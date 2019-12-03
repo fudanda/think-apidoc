@@ -56,6 +56,20 @@ if (!function_exists('jwt_json')) {
     }
 }
 
+if (!function_exists('ajaxReturn')) {
+    function ajaxReturn($status = 1, $msg = '', $count = 0, $data = array())
+    {
+        $result = array(
+            'code' => $status,
+            'msg' => $msg,
+            'count' => $count,
+            'data' => $data,
+        );
+        return json($result);
+    }
+}
+
+
 if (!function_exists('jwt_encode')) {
     /**
      * 获取加密token
