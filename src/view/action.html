@@ -44,7 +44,7 @@
     </fieldset>
 </div>
 <script type="text/html" id="title">
-        <fieldset class="layui-elem-field">
+    <fieldset class="layui-elem-field">
         <legend>{{ d.ApiTitle }}</legend>
         <div class="layui-field-box">
             <p><span>说明</span>：{{ d.ApiDesc}}</p>
@@ -54,89 +54,93 @@
 <script type="text/html" id="detail">
     <table class="layui-table">
         <colgroup>
-            <col width="100"><col>
+            <col width="100">
+            <col>
         </colgroup>
         <tbody>
-        <tr>
-            <td>接口地址</td>
-            <td>
-                <a target="_blank" href="{{ d.ApiUrl }}">
-                    {{ d.ApiUrl }}
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>请求方式</td>
-            <td>{{ method(d.ApiMethod) }}</td>
-        </tr>
-        <tr>
-            <td>接口版本</td>
-            <td>{{ d.ApiVersion ? d.ApiVersion : '-' }}</td>
-        </tr>
-        <tr>
-            <td>开发人员</td>
-            <td>{{ d.ApiAuthor ? d.ApiAuthor : '-' }}</td>
-        </tr>
-        {{# if(d.ApiParam){ }}
-        <tr>
-            <td>请求参数</td>
-            <td>
-                <table class="layui-table">
-                    <colgroup>
-                        <col width="100"><col>
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>名称</th>
-                        <th>类型</th>
-                        <th style="max-width:300px;" >默认值</th>
-                        <th>说明</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{# layui.each(d.ApiParam,function(k,v){ }}
-                    <tr>
-                        <td>{{ v.name }}</td>
-                        <td><span class="layui-badge layui-bg-green">{{ v.type }}</span></td>
-                        <td style="max-width:300px; word-wrap: break-word;word-break: normal;">{{ v.default }}</td>
-                        <td>{{ v.desc }}</td>
-                    </tr>
-                    {{# }); }}
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        {{# } }}
-        {{# if(d.ApiReturn){ }}
-        <tr>
-            <td>响应参数</td>
-            <td>
-                <table class="layui-table">
-                    <colgroup>
-                        <col width="100"><col>
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>名称</th>
-                        <th>类型</th>
-                        <th>默认值</th>
-                        <th>说明</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{# layui.each(d.ApiReturn,function(k,v){ }}
-                    <tr>
-                        <td>{{ v.name }}</td>
-                        <td><span class="layui-badge layui-bg-green">{{ v.type }}</span></td>
-                        <td>{{ v.default }}</td>
-                        <td>{{ v.desc }}</td>
-                    </tr>
-                    {{# }); }}
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        {{# } }}
+            <tr>
+                <td>接口地址</td>
+                <td>
+                    <a target="_blank" href="{{ d.ApiUrl }}">
+                        {{ d.ApiUrl }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>请求方式</td>
+                <td>{{ method(d.ApiMethod) }}</td>
+            </tr>
+            <tr>
+                <td>接口版本</td>
+                <td>{{ d.ApiVersion ? d.ApiVersion : '-' }}</td>
+            </tr>
+            <tr>
+                <td>开发人员</td>
+                <td>{{ d.ApiAuthor ? d.ApiAuthor : '-' }}</td>
+            </tr>
+            {{# if(d.ApiParam){ }}
+            <tr>
+                <td>请求参数</td>
+                <td>
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="100">
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th style="max-width:300px;">默认值</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{# layui.each(d.ApiParam,function(k,v){ }}
+                            <tr class="{{#  if((v.name).substr(0, 1)=="#"){ }}layui-bg-blue{{#  } }} ">
+                                <td>{{ v.name }}</td>
+                                <td><span class="layui-badge layui-bg-green">{{ v.type }}</span></td>
+                                <td style="max-width:300px; word-wrap: break-word;word-break: normal;">{{ v.default }}
+                                </td>
+                                <td>{{ v.desc }}</td>
+                            </tr>
+                            {{# }); }}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {{# } }}
+            {{# if(d.ApiReturn){ }}
+            <tr>
+                <td>响应参数</td>
+                <td>
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="100">
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th>默认值</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{# layui.each(d.ApiReturn,function(k,v){ }}
+                            <tr class="{{#  if((v.name).substr(0, 1)=="#"){ }}layui-bg-blue{{#  } }} ">
+                                <td>{{ v.name }}</td>
+                                <td><span class="layui-badge layui-bg-green">{{ v.type }}</span></td>
+                                <td>{{ v.default }}</td>
+                                <td>{{ v.desc }}</td>
+                            </tr>
+                            {{# }); }}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {{# } }}
         </tbody>
     </table>
 </script>
@@ -151,18 +155,17 @@
                 <li><a href="#view_log"><cite>日志</cite></a></li>
                 <li><a href="#view_prompt"><cite>温馨提示</cite></a></li>
             </ul>
-        </div><span class="layui-layer-setwin"><a class="layui-layer-ico layui-layer-close layui-layer-close1"
-            href="javascript:;"></a></span><span class="layui-layer-resize"></span>
-    </div>
+            <!-- </div><span class="layui-layer-setwin"><a class="layui-layer-ico layui-layer-close layui-layer-close1"
+                href="javascript:;"></a></span><span class="layui-layer-resize"></span> -->
+        </div>
 </script>
 <script type="text/html" id="bug">
     <form class="layui-form">
         <div class="layui-form-item">
             <label class="layui-form-label">接口地址</label>
             <div class="layui-input-block">
-                <input type="url" name="url" required lay-verify="url" placeholder="请输入接口地址"
-                    autocomplete="off" class="layui-input"
-                    value="{{ d.ApiUrl ? d.ApiUrl : ''}}">
+                <input type="url" name="url" required lay-verify="url" placeholder="请输入接口地址" autocomplete="off"
+                    class="layui-input" value="{{ d.ApiUrl ? d.ApiUrl : ''}}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -170,8 +173,7 @@
             <div class="layui-input-inline">
                 <select name="method" lay-verify="required">
                     {{# layui.each(['GET','POST','PUT','DELETE'],function(index,item){ }}
-                    <option value="{{ item }}"
-                            {{# if(item.trim()== d.ApiMethod.trim()){ }}selected{{# } }}>{{ item }}
+                    <option value="{{ item }}" {{# if(item.trim()== d.ApiMethod.trim()){ }}selected{{# } }}>{{ item }}
                     </option>
                     {{# }); }}
                 </select>
@@ -182,36 +184,36 @@
             <div class="layui-input-block">
                 <table class="layui-table">
                     <colgroup>
-                        <col width="100"><col>
+                        <col width="100">
+                        <col>
                     </colgroup>
                     <thead>
-                    <tr>
-                        <th>参数</th>
-                        <th>参数值</th>
-                        <th>操作</th>
-                    </tr>
+                        <tr>
+                            <th>参数</th>
+                            <th>参数值</th>
+                            <th>操作</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {{# if(d.is_header == 1){ }}
-                    {{# layui.each(d._header,function(index,item){ }}
-                    <tr>
-                        <td><input name="header[name][]" type="text" disabled class="layui-input" value="{{ index }}">
-                        </td>
-                        <td><input name="header[value][]" type="text" class="layui-input" value="{{ item }}"></td>
-                        <th>
-                            <button class="layui-btn layui-btn-danger layui-btn-xs"
-                                    type="button" data-type="del">删除
-                            </button>
-                        </th>
-                    </tr>
-                    {{# }); }}
-                    {{# }; }}
+                        {{# if(d.is_header == 1){ }}
+                        {{# layui.each(d._header,function(index,item){ }}
+                        <tr>
+                            <td><input name="header[name][]" type="text" disabled class="layui-input"
+                                    value="{{ index }}">
+                            </td>
+                            <td><input name="header[value][]" type="text" class="layui-input" value="{{ item }}"></td>
+                            <th>
+                                <button class="layui-btn layui-btn-danger layui-btn-xs" type="button" data-type="del">删除
+                                </button>
+                            </th>
+                        </tr>
+                        {{# }); }}
+                        {{# }; }}
                     </tbody>
                 </table>
                 <div style="text-align: center;">
-                    <button class="layui-btn layui-btn-normal layui-btn-sm"
-                            data-type="add" data-field="header"
-                            type="button">添加一行
+                    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="add" data-field="header"
+                        type="button">添加一行
                     </button>
                 </div>
             </div>
@@ -225,45 +227,49 @@
                         <col>
                     </colgroup>
                     <thead>
-                    <tr>
-                        <th>参数</th>
-                        <th>参数值</th>
-                        <th>操作</th>
-                    </tr>
+                        <tr>
+                            <th>参数</th>
+                            <th>参数值</th>
+                            <th>类型</th>
+                            <th>操作</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {{# if(d.is_params == 1){ }}
-                    {{# layui.each(d._params,function(index,item){ }}
-                    <tr>
-                        <td><input name="params[name][]" type="text" disabled class="layui-input" value="{{ index }}">
-                        </td>
-                        <td><input name="params[value][]" type="text" class="layui-input" value="{{ item }}"></td>
-                        <th>
-                            <button class="layui-btn layui-btn-danger layui-btn-xs"
-                                    type="button" data-type="del">删除
-                            </button>
-                        </th>
-                    </tr>
-                    {{# }); }}
-                    {{# }; }}
-                    {{# if(d.ApiParam){ }}
-                    {{# layui.each(d.ApiParam,function(index,item){ }}
-                    <tr>
-                        <td><input name="params[name][]" type="text" class="layui-input" value='{{ item.name}}'></td>
-                        <td><input name="params[value][]" type="text" class="layui-input" value='{{ item.default }}'></td>
-                        <td>
-                            <button class="layui-btn layui-btn-danger layui-btn-xs"
-                                    type="button" data-type="del">删除
-                            </button>
-                        </td>
-                    </tr>
-                    {{# }); }}
-                    {{# } }}
+                        {{# if(d.is_params == 1){ }}
+                        {{# layui.each(d._params,function(index,item){ }}
+                        <tr>
+                            <td><input name="params[name][]" type="text" disabled class="layui-input"
+                                    value="{{ index }}">
+                            </td>
+                            <td><input name="params[value][]" type="text" class="layui-input" value="{{ item }}"></td>
+                            <th>
+                                <button class="layui-btn layui-btn-danger layui-btn-xs" type="button" data-type="del">删除
+                                </button>
+                            </th>
+                        </tr>
+                        {{# }); }}
+                        {{# }; }}
+                        {{# if(d.ApiParam){ }}
+                        {{# layui.each(d.ApiParam,function(index,item){ }}
+                        <tr>
+                            <td><input name="params[name][]" type="text" class="layui-input" value='{{ item.name}}'>
+                            </td>
+                            <td><input name="params[value][]" type="text" class="layui-input"
+                                    value='{{ item.default }}'></td>
+                            <td><input name="params[type][]" type="text" class="layui-input" value='{{ item.type }}'>
+                            </td>
+                            <td>
+                                <button class="layui-btn layui-btn-danger layui-btn-xs" type="button" data-type="del">删除
+                                </button>
+                            </td>
+                        </tr>
+                        {{# }); }}
+                        {{# } }}
                     </tbody>
                 </table>
                 <div style="text-align: center;">
-                    <button class="layui-btn layui-btn-normal layui-btn-sm"
-                            type="button" data-type="add" data-field="params">添加一行
+                    <button class="layui-btn layui-btn-normal layui-btn-sm" type="button" data-type="add"
+                        data-field="params">添加一行
                     </button>
                 </div>
             </div>
@@ -279,28 +285,28 @@
     </form>
 </script>
 <script type="text/html" id="log">
-<fieldset class="layui-elem-field">
-    <legend>更新日志</legend>
-    <div class="layui-field-box">
-        {{# if(d.ApiLog){ }}
+    <fieldset class="layui-elem-field">
+        <legend>更新日志</legend>
+        <div class="layui-field-box">
+            {{# if(d.ApiLog){ }}
             <ul class="layui-timeline">
                 {{# layui.each(d.ApiLog,function(k,v){ }}
                 <li class="layui-timeline-item">
-                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                <div class="layui-timeline-content layui-text">
-                    <h3 class="layui-timeline-title"> {{ v.title }}</h3>
-                    <p>
-                        {{ v.desc }}
-                    </p>
-                </div>
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title"> {{ v.title }}</h3>
+                        <p>
+                            {{ v.desc }}
+                        </p>
+                    </div>
                 </li>
                 {{# }); }}
             </ul>
             {{#  } else { }}
             暂无
-        {{#  } }}
-    </div>
-</fieldset>
+            {{#  } }}
+        </div>
+    </fieldset>
 </script>
 
 
@@ -310,10 +316,9 @@
 {block name='js'}
 <script>
     layui.use(['laytpl', 'jquery'], function () {
-        var laytpl = layui.laytpl
-            , $ = layui.jquery;
+        var laytpl = layui.laytpl,
+            $ = layui.jquery;
         $.get(window.location.href, function (response) {
-            console.log(response);
             if (response.code == 0) {
                 render(title.innerHTML, 'view_title', response.data);
                 render(detail.innerHTML, 'view_detail', response.data);
@@ -334,8 +339,10 @@
             add: function () {
                 var field = this.data('field')
                 this.parents('.layui-input-block').find('table tbody').append("<tr>\n" +
-                    "                        <td><input name='" + field + "[name][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
-                    "                        <td><input name='" + field + "[value][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
+                    "                        <td><input name='" + field +
+                    "[name][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
+                    "                        <td><input name='" + field +
+                    "[value][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
                     "                        <td>\n" +
                     "                            <button class=\"layui-btn layui-btn-danger layui-btn-xs\"\n" +
                     "                                    data-type=\"del\" \n" +
@@ -373,16 +380,22 @@
             return '<span ' + method[param] + '>' + param + '</span>';
         }
         layui.use(['form', 'layer'], function () {
-            var form = layui.form
-                , layer = layui.layer;
+            var form = layui.form,
+                layer = layui.layer;
 
             form.on('submit(debug)', function (data) {
-                var index = layer.load(0, { shade: false }); //0代表加载的风格，支持0-2
+                var index = layer.load(0, {
+                    shade: false
+                }); //0代表加载的风格，支持0-2
                 $.ajax({
                     url: "/doc/format_params",
                     type: 'POST',
                     data: data.field,
                     success: function (response) {
+                        var token = localStorage.getItem('token');
+                        if (token != null) {
+                            response.params['token'] = token;
+                        }
                         $.ajax({
                             url: data.field.url,
                             type: data.field.method,
@@ -391,8 +404,17 @@
                             complete: function (XHR) {
                                 layer.close(index);
                                 var html = "";
-                                if (XHR.readyState == 4 && XHR.status == 200) {
-                                    html = "<pre class='layui-code' lay-skin='notepad' lay-encode='true' style='margin: 0'>" + writeHtml(XHR.responseJSON) + "</pre>";
+                                if (XHR.readyState == 4 && XHR.status ==
+                                    200) {
+                                    var result = XHR.responseJSON;
+                                    if (result.hasOwnProperty(
+                                            'token')) {
+                                        localStorage.setItem('token',
+                                            result.token);
+                                    }
+                                    html =
+                                        "<pre class='layui-code' lay-skin='notepad' lay-encode='true' style='margin: 0'>" +
+                                        writeHtml(result) + "</pre>";
                                 } else {
                                     html = XHR.responseText;
                                 }
@@ -414,14 +436,6 @@
                                     title: 'title',
                                     content: html,
                                 });
-                                // layer.open({
-                                //     type: 1,
-                                //     shade: false,
-                                //     area: '700px',
-                                //     maxHeight: document.body.clientHeight - 100,
-                                //     title: false, //不显示标题
-                                //     content: html
-                                // });
                             }
                         })
 
@@ -431,6 +445,5 @@
             })
         })
     });
-
 </script>
 {/block}
