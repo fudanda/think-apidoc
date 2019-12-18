@@ -216,6 +216,7 @@
                         type="button">添加一行
                     </button>
                 </div>
+
             </div>
         </div>
         <div class="layui-form-item">
@@ -271,10 +272,13 @@
                     <button class="layui-btn layui-btn-normal layui-btn-sm" type="button" data-type="add"
                         data-field="params">添加一行
                     </button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm" type="button" data-type="add_file"
+                        data-field="params">添加文件上传
+                    </button>
                 </div>
             </div>
         </div>
-        <input type="hidden" name="cookie" value="{:http_build_query($_COOKIE,'',';')}">
+        <!-- <input type="hidden" name="cookie" value="{:http_build_query($_COOKIE,'',';')}"> -->
 
         <div class="layui-form-item">
             <div class="layui-input-block">
@@ -335,6 +339,8 @@
             })
         }
 
+
+
         var action = {
             add: function () {
                 var field = this.data('field')
@@ -343,6 +349,8 @@
                     "[name][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
                     "                        <td><input name='" + field +
                     "[value][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
+                    "                        <td><input name='" + field +
+                    "[type][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
                     "                        <td>\n" +
                     "                            <button class=\"layui-btn layui-btn-danger layui-btn-xs\"\n" +
                     "                                    data-type=\"del\" \n" +
@@ -350,6 +358,23 @@
                     "                            </button>\n" +
                     "                        </td>\n" +
                     "                    </tr>");
+            },
+            add_file: function () {
+                var field = this.data('field')
+                this.parents('.layui-input-block').find('table tbody').append("<tr>\n" +
+                    " <td><input name='" + field +
+                    "[name][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
+                    " <td><input name='" + field +
+                    "[value][]' type=\"file\" class=\"layui-input file\" value=''></td>\n" +
+                    " <td><input name='" + field +
+                    "[type][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
+                    " <td>\n" +
+                    " <button class=\"layui-btn layui-btn-danger layui-btn-xs\"\n" +
+                    "                                    data-type=\"del\" \n" +
+                    "                                    type=\" button\">删除\n" +
+                    " </button>\n" +
+                    " </td>\n" +
+                    " </tr>");
             },
             del: function () {
                 this.parents('tr').remove();
@@ -396,11 +421,27 @@
                         if (token != null) {
                             response.params['token'] = token;
                         }
+                        var formData = new FormData();
+                        var params = response.params;
+                        for (const key in params) {
+                            formData.append(key, params[key])
+                        }
+                        var files = document.querySelectorAll(".file");
+                        for (var i = 0; i < files.length; i++) {
+                            var name = files[i].parentNode.previousElementSibling
+                                .firstChild.value;
+                            var fileObj = files[i].files[0]
+                            formData.append(name, fileObj);
+                        }
+
                         $.ajax({
                             url: data.field.url,
+                            dataType: "json",
                             type: data.field.method,
-                            // headers: response.header,
-                            data: response.params,
+                            headers: response.header,
+                            data: formData,
+                            processData: false,
+                            contentType: false,
                             complete: function (XHR) {
                                 layer.close(index);
                                 var html = "";
