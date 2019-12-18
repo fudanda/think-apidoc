@@ -236,27 +236,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{# if(d.is_params == 1){ }}
-                        {{# layui.each(d._params,function(index,item){ }}
-                        <tr>
-                            <td><input name="params[name][]" type="text" disabled class="layui-input"
-                                    value="{{ index }}">
-                            </td>
-                            <td><input name="params[value][]" type="text" class="layui-input" value="{{ item }}"></td>
-                            <th>
-                                <button class="layui-btn layui-btn-danger layui-btn-xs" type="button" data-type="del">删除
-                                </button>
-                            </th>
-                        </tr>
-                        {{# }); }}
-                        {{# }; }}
                         {{# if(d.ApiParam){ }}
                         {{# layui.each(d.ApiParam,function(index,item){ }}
                         <tr>
                             <td><input name="params[name][]" type="text" class="layui-input" value='{{ item.name}}'>
                             </td>
-                            <td><input name="params[value][]" type="text" class="layui-input"
-                                    value='{{ item.default }}'></td>
+                            <td><input name="params[value][]" type="{{# if(item.type==='file'){ }}file{{# } }}"
+                                    class="layui-input {{# if(item.type==='file'){ }}upload_file{{# } }}"
+                                    value='{{ item.default }}'>
+                            </td>
                             <td><input name="params[type][]" type="text" class="layui-input" value='{{ item.type }}'>
                             </td>
                             <td>
@@ -365,7 +353,7 @@
                     " <td><input name='" + field +
                     "[name][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
                     " <td><input name='" + field +
-                    "[value][]' type=\"file\" class=\"layui-input file\" value=''></td>\n" +
+                    "[value][]' type=\"file\" class=\"layui-input upload_file\" value=''></td>\n" +
                     " <td><input name='" + field +
                     "[type][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
                     " <td>\n" +
@@ -426,7 +414,7 @@
                         for (const key in params) {
                             formData.append(key, params[key])
                         }
-                        var files = document.querySelectorAll(".file");
+                        var files = document.querySelectorAll(".upload_file");
                         for (var i = 0; i < files.length; i++) {
                             var name = files[i].parentNode.previousElementSibling
                                 .firstChild.value;
