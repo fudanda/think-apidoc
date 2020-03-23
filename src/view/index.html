@@ -77,22 +77,22 @@
     </div>
     <div class="site-mobile-shade"></div>
     <script src="{$assetss}/layui/layui.js" charset="utf-8"></script>
-    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <!-- <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script> -->
     <script>
         window.global = {
-            pageType: 'doc'
-            , preview: function () {
+            pageType: 'doc',
+            preview: function () {
                 var preview = document.getElementById('LAY_preview');
                 return preview ? preview.innerHTML : '';
             }()
         };
         layui.config({
-            base: '{$assetss}/layui/lay/modules/'
-            , version: '1573457678857'
+            base: '{$assetss}/layui/lay/modules/',
+            version: '1573457678857'
         }).use('global');
-        jinrishici.load(function (result) {
-            console.log(result)
-        });
+        // jinrishici.load(function (result) {
+        //     console.log(result)
+        // });
     </script>
     {block name='js'}
     {/block}

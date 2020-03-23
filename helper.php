@@ -203,4 +203,48 @@ if (!function_exists("http_curl")) {
             return $result;
         }
     }
+
+
+    if (!function_exists('ajaxFail')) {
+        /**
+         * 返回失败
+         *
+         * @param string $msg
+         * @param array $data
+         * @param integer $count
+         * @param integer $status
+         * @return string
+         */
+        function ajaxFail($msg = null, $status = 1)
+        {
+            is_null($msg) && $msg = '失败';
+            $result = array(
+                'code' => $status,
+                'msg' => $msg,
+            );
+            return json($result);
+        }
+    }
+    if (!function_exists('ajaxSuccess')) {
+        /**
+         * 返回成功
+         *
+         * @param array $data
+         * @param integer $count
+         * @param [type] $msg
+         * @param integer $status
+         * @return string
+         */
+        function ajaxSuccess($data = null, $count = 0, $msg = null,  $status = 0)
+        {
+            is_null($msg) && $msg = '成功';
+            $result       = [
+                'code'  => $status,
+                'msg'   => $msg,
+                'count' => $count,
+                'data'  => $data,
+            ];
+            return json($result);
+        }
+    }
 }

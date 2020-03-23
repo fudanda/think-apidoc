@@ -397,6 +397,12 @@
                 layer = layui.layer;
 
             form.on('submit(debug)', function (data) {
+                $.each(data.field, function (index, item) {
+                    if (item == 'array') {
+                        var array_value = index.replace("type", "value")
+                        data.field[array_value] = JSON.parse(data.field[array_value]);
+                    }
+                });
                 var index = layer.load(0, {
                     shade: false
                 }); //0代表加载的风格，支持0-2
@@ -417,6 +423,7 @@
                         if (files.length > 0) {
                             var formData = new FormData();
                             var params = response.params;
+                            console.log("params", params)
                             for (const key in params) {
                                 formData.append(key, params[key])
                             }

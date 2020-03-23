@@ -12,7 +12,7 @@ class Utils
      * 获取加密token
      * @param [array]  $data     用户信息
      * @param [string] $key      密钥
-     * @param [int]    $expiration_time     过期时间
+     * @param [int]    $expiration_time     过期时间 默认两小时
      * @param [string]    $arithmetic     加密算法默认-HS256-[HS256,HS384,HS512,RS256,RS384,RS512]
      * @param [array]   $payload  配置
      * @return string
@@ -48,7 +48,6 @@ class Utils
      */
     public static function jwt_decode($token = null,  $key = null, $arithmetic = null)
     {
-        dump($token);
         if (is_null($token)) {
             return false;
         }
