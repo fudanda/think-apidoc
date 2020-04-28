@@ -1,6 +1,6 @@
 <?php
 
-namespace FuDanDa\ApiDoc;
+namespace Fdd\ApiDoc;
 
 class Doc
 {

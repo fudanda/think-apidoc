@@ -1,6 +1,6 @@
 <?php
 
-namespace FuDanDa\ApiDoc;
+namespace Fdd\ApiDoc;
 
 use think\facade\Config;
 
@@ -151,7 +151,8 @@ class Extractor
                     $argsParts = trim($matches['args'][$i]);
                     $name      = $matches['name'][$i];
                     $value     = self::parseArgs($argsParts);
-                } else { }
+                } else {
+                }
                 $annotations[$name][] = $value;
             }
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace FuDanDa\ApiDoc;
+namespace Fdd\ApiDoc;
 
 use Firebase\JWT\JWT;
 
@@ -20,7 +20,7 @@ class Utils
     public static function jwt_encode($data = null, $key = null, $expiration_time = null, $arithmetic = null, $payload = null)
     {
         $nowtime = time();
-        $jwtkey = 'https://github.com/fudanda/think-apidoc';
+        $jwtkey = 'https://github.com/Fdd/think-apidoc';
         is_null($key) && $key = (config('api_config.jwtkey')) ?: $jwtkey;
         is_null($expiration_time) && $expiration_time = 7200;
         is_null($arithmetic) && $arithmetic = 'HS256';
@@ -51,7 +51,7 @@ class Utils
         if (is_null($token)) {
             return false;
         }
-        $jwtkey = 'https://github.com/fudanda/think-apidoc';
+        $jwtkey = 'https://github.com/Fdd/think-apidoc';
         is_null($key) && $key = (config('api_config.jwtkey')) ?: $jwtkey;
         is_null($arithmetic) && $arithmetic = 'HS256';
         $decode = JWT::decode($token, $key, array($arithmetic));

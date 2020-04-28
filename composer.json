@@ -1,7 +1,7 @@
 {
   "name": "fdd/think-apidoc",
-  "description": "ThinkPHP5,1 API文档自动生成",
-  "type": "think-extend",
+  "description": "",
+  "type": "library",
   "authors": [
     {
       "name": "fudanda",
@@ -11,19 +11,24 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "FuDanDa\\ApiDoc\\": "src"
+      "Fdd\\ApiDoc\\": "src"
     },
     "files": [
-      "helper.php"
+      "src/helper.php"
     ]
   },
   "require": {
-    "php": ">=5.6.0",
+    "php": ">=7.1.0",
     "firebase/php-jwt": "^5.2"
   },
   "extra": {
-    "think-config": {
-      "api_config": "config.php"
+    "think": {
+      "services": [
+        "Fdd\\ApiDoc\\Service"
+      ],
+      "config": {
+        "apiconfig": "src/config.php"
+      }
     }
   }
 }
