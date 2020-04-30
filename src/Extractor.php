@@ -43,9 +43,9 @@ class Extractor
     {
         $_arr = explode('\\', strtolower($object->class));
         if (count($_arr) === 5) {
-            $url = url($_arr[1] . '/' . $_arr[3] . '.' . $_arr[4] . '/' . $object->name, '', '', true);
+            $url = url($_arr[1] . '/' . $_arr[3] . '.' . $_arr[4] . '/' . $object->name, [], '', true);
         } else {
-            $url = url($_arr[1] . '/' . $_arr[3] . '/' . $object->name, '', '', true);
+            $url = url($_arr[1] . '/' . $_arr[3] . '/' . $object->name, [], '', true);
         }
         return $url;
     }
@@ -57,8 +57,10 @@ class Extractor
      */
     private static function parseArgs($content)
     {
-        $doc = new Doc((array) Config::pull('api_config'));
-        $delimiter = $doc->__get('delimiter');
+        $config = Config::get('apiconfig');
+
+        $doc = Build::make($config);
+        $delimiter = $doc->delimiter;
         empty($delimiter) && $delimiter = '-';
         $content = explode($delimiter, $content);
         return $content;
@@ -90,7 +92,7 @@ class Extractor
                 return $data[0][0];
             },
             'ApiUrl'  => function ($data) {
-                return url($data[0][0], '', false, true);
+                return url($data[0][0], [], false, true);
             },
             'ApiParam'  => function ($data) {
                 foreach ($data as $key => $value) {

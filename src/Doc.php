@@ -4,7 +4,7 @@ namespace Fdd\ApiDoc;
 
 class Doc
 {
-    protected $config = [
+    public $config = [
         'title' => 'Api接口文档',
         'version' => '1.0.0',
         'copyright' => 'Powered By XXX',

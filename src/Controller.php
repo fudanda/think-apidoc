@@ -106,9 +106,11 @@ class Controller
     # 解析资源
     public function assetss()
     {
+        dump(1);
         $assets_path = __DIR__ . DS . 'static' . DS;
         $path        = str_replace("doc/assetss", "", $this->request->pathinfo());
         $ext         = $this->request->ext();
+        die;
         if ($ext) {
             $type    = "text/html";
             $content = file_get_contents($assets_path . $path);
@@ -196,9 +198,6 @@ class Controller
         }
         return $result;
     }
-
-
-    use \traits\controller\Jump;
 
     public function login()
     {

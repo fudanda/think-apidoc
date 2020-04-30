@@ -1,0 +1,51 @@
+<div class="layui-card" id="view_title"></div>
+<div class="layui-card" id="view_interface">
+    <fieldset class="layui-elem-field">
+        <legend>接口信息/调试</legend>
+        <div class="layui-field-box">
+            <div class="layui-tab layui-tab-card">
+                <ul class="layui-tab-title">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this" lay-id="detail">接口详情</li>
+                        <li lay-id="debug">在线调试</li>
+                    </ul>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div id="view_detail">2131231</div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div id="view_bug">12312312</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="layui-card" id="view_directory">
+
+</div>
+<div style="padding-bottom: 15px;" id="view_log">
+
+</div>
+<div id="view_prompt">
+    <fieldset class="layui-elem-field">
+        <legend>温馨提示</legend>
+        <div class="layui-field-box">
+            <blockquote class="layui-elem-quote">此文档是由系统自动生成，如发现错误或疑问请告知开发人员及时修改</blockquote>
+        </div>
+    </fieldset>
+</div>
+<div id="data" data-data="{$data}"></div>
+<script>
+    layui.use(['jquery', 'layer', 'table'], function () {
+        const $ = layui.jquery;
+        const layer = layui.layer;
+        const table = layui.table;
+
+        const data = $('#data').data('data');
+
+        
+
+    });
+</script>
