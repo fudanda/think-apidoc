@@ -7,48 +7,26 @@ use think\Request;
 use think\facade\View;
 use Fdd\ApiDoc\Build;
 use Fdd\ApiDoc\Extractor;
+use Fdd\ApiDoc\BaseController;
 
-class Index
+class Index extends BaseController
 {
     # 资源类型
-    protected $mimeType = [
-        'xml'  => 'application/xml,text/xml,application/x-xml',
-        'json' => 'application/json,text/x-json,application/jsonrequest,text/json',
-        'js'   => 'text/javascript,application/javascript,application/x-javascript',
-        'css'  => 'text/css',
-        'rss'  => 'application/rss+xml',
-        'yaml' => 'application/x-yaml,text/yaml',
-        'atom' => 'application/atom+xml',
-        'pdf'  => 'application/pdf',
-        'text' => 'text/plain',
-        'png'  => 'image/png',
-        'jpg'  => 'image/jpg,image/jpeg,image/pjpeg',
-        'gif'  => 'image/gif',
-        'csv'  => 'text/csv',
-        'html' => 'text/html,application/xhtml+xml,*/*',
-    ];
+
     public function index(Request $request = null)
     {
-
-        $this->assets_paths = file_build_path(__DIR__, '..', 'layuimini-2-onepage', '');
-        $this->view_path   = file_build_path(__DIR__, '..', 'layuimini-2-onepage', '');
-
-        $config = [
-            'view_path' => $this->view_path,
-        ];
-        View::config($config);
-        View::assign('assetss', '/doc/assetss');
+        View::config($this->viewConfig);
+        View::assign('resource', '/doc/resource');
         return View::fetch('index');
     }
     # 解析资源
-    public function assetss(Request $request = null)
+    public function resource(Request $request = null)
     {
-        $assets_path = file_build_path(__DIR__, '..', 'layuimini-2-onepage', '');
-        $path        = str_replace("doc/assetss", "", $request->pathinfo());
+        $path        = str_replace("doc/resource", "", $request->pathinfo());
         $ext         = $request->ext();
         if ($ext) {
             $type    = "text/html";
-            $content = file_get_contents($assets_path . $path);
+            $content = file_get_contents($this->resourcePaths . $path);
             if (array_key_exists($ext, $this->mimeType)) {
                 $type = $this->mimeType[$ext];
             }
@@ -59,12 +37,7 @@ class Index
     {
 
         if ($request->isGet()) {
-            $this->view_path   = file_build_path(__DIR__, '..', 'layuimini-2-onepage', '');
-            $config = [
-                'view_path' => $this->view_path,
-            ];
-            View::config($config);
-            View::assign('assetss', '/doc/assetss');
+            View::config($this->viewConfig);
             return View::fetch('action');
         }
         list($class, $action) = explode("::", $name);
@@ -74,7 +47,6 @@ class Index
         $build = Build::make($config);
         $data = $build->detail($class, $action);
 
-        // var_dump($data);
 
         $jsondata = [
             'code' => 200,

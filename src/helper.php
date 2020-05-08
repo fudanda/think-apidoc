@@ -1,8 +1,4 @@
 <?php
-
-use Fdd\ApiDoc\Utils;
-
-
 # 当前URL
 if (!function_exists("get_url")) {
     function get_url()
@@ -29,48 +25,6 @@ if (!function_exists('jwt_json')) {
     }
 }
 
-if (!function_exists('ajaxReturn')) {
-    function ajaxReturn($status = 1, $msg = '', $count = 0, $data = array())
-    {
-        $result = array(
-            'code' => $status,
-            'msg' => $msg,
-            'count' => $count,
-            'data' => $data,
-        );
-        return json($result);
-    }
-}
-
-
-if (!function_exists('jwt_encode')) {
-    /**
-     * 获取加密token
-     * @param [array]  $data     用户信息
-     * @param [string] $key      密钥
-     * @param [int]    $expiration_time     过期时间
-     * @param [string] $arithmetic     加密算法默认-HS256-[HS256,HS384,HS512,RS256,RS384,RS512]
-     * @param [array]  $payload  配置
-     * @return string
-     */
-    function jwt_encode($data = null, $key = null, $expiration_time = null, $arithmetic = null, $payload = null)
-    {
-        return  Utils::jwt_encode($data, $key, $expiration_time, $arithmetic, $payload);
-    }
-}
-if (!function_exists('jwt_decode')) {
-    /**
-     * 解密token
-     * @param [array]  $token     jwt信息
-     * @param [string] $key      密钥
-     * @param [string]    $arithmetic     加密算法默认-HS256-[HS256,HS384,HS512,RS256,RS384,RS512]
-     * @return string
-     */
-    function jwt_decode($token = null,  $key = null, $arithmetic = null)
-    {
-        return  Utils::jwt_decode($token,  $key, $arithmetic);
-    }
-}
 # 驼峰转下划线
 if (!function_exists("hump_to_line")) {
     function hump_to_line($str)
@@ -174,50 +128,6 @@ if (!function_exists("http_curl")) {
             $result = false;
             !isset($param) || !$param && $result = true;
             return $result;
-        }
-    }
-
-
-    if (!function_exists('ajaxFail')) {
-        /**
-         * 返回失败
-         *
-         * @param string $msg
-         * @param array $data
-         * @param integer $count
-         * @param integer $status
-         * @return string
-         */
-        function ajaxFail($msg = null, $status = 1)
-        {
-            is_null($msg) && $msg = '失败';
-            $result = array(
-                'code' => $status,
-                'msg' => $msg,
-            );
-            return json($result);
-        }
-    }
-    if (!function_exists('ajaxSuccess')) {
-        /**
-         * 返回成功
-         *
-         * @param array $data
-         * @param integer $count
-         * @param [type] $msg
-         * @param integer $status
-         * @return string
-         */
-        function ajaxSuccess($data = null, $count = 0, $msg = null,  $status = 0)
-        {
-            is_null($msg) && $msg = '成功';
-            $result       = [
-                'code'  => $status,
-                'msg'   => $msg,
-                'count' => $count,
-                'data'  => $data,
-            ];
-            return json($result);
         }
     }
 }

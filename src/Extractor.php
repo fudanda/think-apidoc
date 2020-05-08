@@ -3,6 +3,7 @@
 namespace Fdd\ApiDoc;
 
 use think\facade\Config;
+use think\facade\Route;
 
 class Extractor
 {
@@ -73,8 +74,6 @@ class Extractor
      */
     public function formatComment($array)
     {
-        // $docComment = $this->getDocComment($object);
-        // $annotationsArr = $this->paeseDocComment($docComment);
         $config = [
             'ApiTitle'   => function ($data) {
                 return $data[0][0];
@@ -92,7 +91,7 @@ class Extractor
                 return $data[0][0];
             },
             'ApiUrl'  => function ($data) {
-                return url($data[0][0], [], false, true);
+                return $this->urlBuild($data[0][0], [], false, true);
             },
             'ApiParam'  => function ($data) {
                 foreach ($data as $key => $value) {
@@ -143,7 +142,6 @@ class Extractor
      */
     public function paeseDocComment($array)
     {
-
         $annotations = array();
         if (preg_match_all('/@(?<name>[A-Za-z_-]+)[\s\t]*\((?<args>(?:(?!\)).)*)\)\r?/s', $array, $matches)) {
             $numMatches = count($matches[0]);
@@ -162,8 +160,12 @@ class Extractor
     }
     public function getDocCommentArr($object)
     {
+        //获取方法注释信息
         $docComment = $this->getDocComment($object);
-        $comment = $this->formatComment($this->paeseDocComment($docComment));
+        //正则匹配解析注释信息
+        $paeseDocComment = $this->paeseDocComment($docComment);
+        //格式化
+        $comment = $this->formatComment($paeseDocComment);
         return $comment;
     }
     /**
@@ -174,5 +176,16 @@ class Extractor
     public function getDocComment($object)
     {
         return $object->getDocComment();
+    }
+
+    /**
+     * Url生成
+     *
+     * @return void
+     */
+    public function urlBuild(string $url = '', array $vars = [], $suffix = true, $domain = false)
+    {
+        //默认返回对象 (string)强制转换为字符串类型
+        return (string) Route::buildUrl($url, $vars)->suffix($suffix)->domain($domain);
     }
 }

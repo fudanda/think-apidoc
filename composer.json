@@ -27,7 +27,7 @@
         "Fdd\\ApiDoc\\Service"
       ],
       "config": {
-        "apiconfig": "src/config.php"
+        "apiconfig": "src/Config.php"
       }
     }
   }

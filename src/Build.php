@@ -3,14 +3,17 @@
 namespace Fdd\ApiDoc;
 
 use Fdd\ApiDoc\Extractor;
+use think\facade\Config;
 
 class Build
 {
-
     protected $config = [];
-    # 获取接口列表
+
     public function __construct($config = [])
     {
+        if (empty($config)) {
+            $config = Config::get('apiconfig');
+        }
         $this->config = array_merge($this->config, $config);
     }
 
@@ -59,7 +62,7 @@ class Build
 
     public function initMenu($apiMenu = [])
     {
-        $jsonFilePath = file_build_path(__DIR__, 'layuimini-2-onepage', 'api', 'init.json');
+        $jsonFilePath = file_build_path(__DIR__, 'view', 'api', 'init.json');
         $json_string = file_get_contents($jsonFilePath);
         // 用参数true把JSON字符串强制转成PHP数组
         $data = json_decode($json_string, true);
@@ -99,7 +102,7 @@ class Build
             }
             $value['child'][] = $super[$key];
         }
-        $jsonFilePath = file_build_path(__DIR__, 'layuimini-2-onepage', 'api', 'init.json');
+        $jsonFilePath = file_build_path(__DIR__, 'view', 'api', 'init.json');
         $json_string = file_get_contents($jsonFilePath);
         // 用参数true把JSON字符串强制转成PHP数组
         $data = json_decode($json_string, true);

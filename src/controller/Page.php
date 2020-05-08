@@ -9,7 +9,7 @@ class Page
 {
     public function welcome(Request $request = null)
     {
-        $this->view_path   = file_build_path(__DIR__, '..', 'layuimini-2-onepage', 'page', '');
+        $this->view_path   = file_build_path(__DIR__, '..', 'view', 'page', '');
 
         $config = [
             'view_path' => $this->view_path,

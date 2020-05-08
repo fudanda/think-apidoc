@@ -1,281 +1,121 @@
-{extend name="index" /}
-{block name="head"}
+<style>
+    .layui-table-cell {
+        display: table-cell;
+        vertical-align: middle;
+    }
+</style>
 
-{/block}
+<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main site-content">
 
-
-{block name='content'}
-<div class="layui-card" id="view_title"></div>
-<div class="layui-card" id="view_interface">
-    <fieldset class="layui-elem-field">
-        <legend>接口信息/调试</legend>
-        <div class="layui-field-box">
-            <div class="layui-tab layui-tab-card">
-                <ul class="layui-tab-title">
-                    <ul class="layui-tab-title">
-                        <li class="layui-this" lay-id="detail">接口详情</li>
-                        <li lay-id="debug">在线调试</li>
-                    </ul>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        <div id="view_detail"></div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <div id="view_bug"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </fieldset>
-</div>
-<div class="layui-card" id="view_directory">
-
-</div>
-<div style="padding-bottom: 15px;" id="view_log">
-
-</div>
-<div id="view_prompt">
-    <fieldset class="layui-elem-field">
-        <legend>温馨提示</legend>
-        <div class="layui-field-box">
-            <blockquote class="layui-elem-quote">此文档是由系统自动生成，如发现错误或疑问请告知开发人员及时修改</blockquote>
-        </div>
-    </fieldset>
-</div>
-<script type="text/html" id="title">
-    <fieldset class="layui-elem-field">
-        <legend>{{ d.ApiTitle }}</legend>
-        <div class="layui-field-box">
-            <p><span>说明</span>：{{ d.ApiDesc}}</p>
-        </div>
-    </fieldset>
-</script>
-<script type="text/html" id="detail">
-    <table class="layui-table">
-        <colgroup>
-            <col width="100">
-            <col>
-        </colgroup>
-        <tbody>
-            <tr>
-                <td>接口地址</td>
-                <td>
-                    <a target="_blank" href="{{ d.ApiUrl }}">
-                        {{ d.ApiUrl }}
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>请求方式</td>
-                <td>{{ method(d.ApiMethod) }}</td>
-            </tr>
-            <tr>
-                <td>接口版本</td>
-                <td>{{ d.ApiVersion ? d.ApiVersion : '-' }}</td>
-            </tr>
-            <tr>
-                <td>开发人员</td>
-                <td>{{ d.ApiAuthor ? d.ApiAuthor : '-' }}</td>
-            </tr>
-            {{# if(d.ApiParam){ }}
-            <tr>
-                <td>请求参数</td>
-                <td>
-                    <table class="layui-table">
-                        <colgroup>
-                            <col width="100">
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>名称</th>
-                                <th>类型</th>
-                                <th style="max-width:300px;">默认值</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{# layui.each(d.ApiParam,function(k,v){ }}
-                            <tr class="{{#  if((v.name).substr(0, 1)=="#"){ }}layui-bg-blue{{#  } }} ">
-                                <td>{{ v.name }}</td>
-                                <td><span class="layui-badge layui-bg-green">{{ v.type }}</span></td>
-                                <td style="max-width:300px; word-wrap: break-word;word-break: normal;">{{ v.default }}
-                                </td>
-                                <td>{{ v.desc }}</td>
-                            </tr>
-                            {{# }); }}
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            {{# } }}
-            {{# if(d.ApiReturn){ }}
-            <tr>
-                <td>响应参数</td>
-                <td>
-                    <table class="layui-table">
-                        <colgroup>
-                            <col width="100">
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>名称</th>
-                                <th>类型</th>
-                                <th>默认值</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{# layui.each(d.ApiReturn,function(k,v){ }}
-                            <tr class="{{#  if((v.name).substr(0, 1)=="#"){ }}layui-bg-blue{{#  } }} ">
-                                <td>{{ v.name }}</td>
-                                <td><span class="layui-badge layui-bg-green">{{ v.type }}</span></td>
-                                <td>{{ v.default }}</td>
-                                <td>{{ v.desc }}</td>
-                            </tr>
-                            {{# }); }}
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            {{# } }}
-        </tbody>
-    </table>
-</script>
-<script type="text/html" id="directory">
-    <div class="layui-layer layui-layer-page layui-layer-dir" id="layui-layer1" type="page" times="1" showtime="0"
-        contype="object" style="z-index: 19891015; top: 365px; left: 1313px; margin-left: -15px;">
-        <div class="layui-layer-title" style="cursor: move;">目录</div>
-        <div id="" class="layui-layer-content">
-            <ul class="site-dir layui-layer-wrap" style="display: block;">
-                <li><a href="#view_title"><cite>{{ d.ApiTitle }}</cite></a></li>
-                <li><a href="#view_interface"><cite>接口信息/调试</cite></a></li>
-                <li><a href="#view_log"><cite>日志</cite></a></li>
-                <li><a href="#view_prompt"><cite>温馨提示</cite></a></li>
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="detail">接口详情</li>
+                <li lay-id="debug">在线调试</li>
             </ul>
-            <!-- </div><span class="layui-layer-setwin"><a class="layui-layer-ico layui-layer-close layui-layer-close1"
-                href="javascript:;"></a></span><span class="layui-layer-resize"></span> -->
+            <div class="layui-tab-content">
+
+                <div class="layui-tab-item layui-show" id="view_information"></div>
+
+                <div class="layui-tab-item" id="view_debug" lay-filter="debug">
+
+                </div>
+            </div>
         </div>
+
+        <div id="view_log"></div>
+
+        <div id="view_prompt">
+            <fieldset class="layui-elem-field">
+                <legend>温馨提示</legend>
+                <div class="layui-field-box">
+                    <blockquote class="layui-elem-quote">此文档是由系统自动生成，如发现错误或疑问请告知开发人员及时修改</blockquote>
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
+</div>
+<script type="text/html" id="information">
+
+
+    <fieldset class="layui-elem-field layui-field-title">
+    <legend>标题</legend>
+    </fieldset>
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">{{ method(d.ApiMethod) }}</label>
+            <div class="layui-input-block">
+                <input type="text" name="ApiUrl"
+                    class="layui-input layext-text-tool" value="{{ d.ApiUrl }}">
+            </div>
+        </div>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title">
+    <legend>接口描述：</legend>
+    </fieldset>
+    <blockquote class="layui-elem-quote">新闻列表</blockquote>
+
+    <fieldset class="layui-elem-field layui-field-title">
+    <legend>请求参数</legend>
+    </fieldset>
+    <table  id="request" lay-filter="request"></table>
+
+    <fieldset class="layui-elem-field layui-field-title">
+    <legend>响应参数</legend>
+    </fieldset>
+    <table  id="response" lay-filter="response"></table>
+
 </script>
-<script type="text/html" id="bug">
-    <form class="layui-form">
-        <div class="layui-form-item">
-            <label class="layui-form-label">接口地址</label>
-            <div class="layui-input-block">
-                <input type="url" name="url" required lay-verify="url" placeholder="请输入接口地址" autocomplete="off"
-                    class="layui-input" value="{{ d.ApiUrl ? d.ApiUrl : ''}}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">请求方式</label>
-            <div class="layui-input-inline">
-                <select name="method" lay-verify="required">
-                    {{# layui.each(['GET','POST','PUT','DELETE'],function(index,item){ }}
-                    <option value="{{ item }}" {{# if(item.trim()== d.ApiMethod.trim()){ }}selected{{# } }}>{{ item }}
-                    </option>
-                    {{# }); }}
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">请求头部</label>
-            <div class="layui-input-block">
-                <table class="layui-table">
-                    <colgroup>
-                        <col width="100">
-                        <col>
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>参数</th>
-                            <th>参数值</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{# if(d.is_header == 1){ }}
-                        {{# layui.each(d._header,function(index,item){ }}
-                        <tr>
-                            <td><input name="header[name][]" type="text" disabled class="layui-input"
-                                    value="{{ index }}">
-                            </td>
-                            <td><input name="header[value][]" type="text" class="layui-input" value="{{ item }}"></td>
-                            <th>
-                                <button class="layui-btn layui-btn-danger layui-btn-xs" type="button" data-type="del">删除
-                                </button>
-                            </th>
-                        </tr>
-                        {{# }); }}
-                        {{# }; }}
-                    </tbody>
-                </table>
-                <div style="text-align: center;">
-                    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="add" data-field="header"
-                        type="button">添加一行
-                    </button>
-                </div>
 
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">请求参数</label>
-            <div class="layui-input-block">
-                <table class="layui-table">
-                    <colgroup>
-                        <col width="200">
-                        <col>
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>参数</th>
-                            <th>参数值</th>
-                            <th>类型</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{# if(d.ApiParam){ }}
-                        {{# layui.each(d.ApiParam,function(index,item){ }}
-                        <tr>
-                            <td><input name="params[name][]" type="text" class="layui-input" value='{{ item.name}}'>
-                            </td>
-                            <td><input name="params[value][]" type="{{# if(item.type==='file'){ }}file{{# } }}"
-                                    class="layui-input {{# if(item.type==='file'){ }}upload_file{{# } }}"
-                                    value='{{ item.default }}'>
-                            </td>
-                            <td><input name="params[type][]" type="text" class="layui-input" value='{{ item.type }}'>
-                            </td>
-                            <td>
-                                <button class="layui-btn layui-btn-danger layui-btn-xs" type="button" data-type="del">删除
-                                </button>
-                            </td>
-                        </tr>
-                        {{# }); }}
-                        {{# } }}
-                    </tbody>
-                </table>
-                <div style="text-align: center;">
-                    <button class="layui-btn layui-btn-normal layui-btn-sm" type="button" data-type="add"
-                        data-field="params">添加一行
-                    </button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm" type="button" data-type="add_file"
-                        data-field="params">添加文件上传
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- <input type="hidden" name="cookie" value="{:http_build_query($_COOKIE,'',';')}"> -->
+<script type="text/html" id="debug">
 
+    <div class="layui-form">
+        <fieldset class="layui-elem-field layui-field-title">
+        <legend>请求头部</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <input type="text" name="ApiUrl" placeholder="请输入接口地址"
+                class="layui-input layext-text-tool" value="{{ d.ApiUrl ? d.ApiUrl : ''}}">
+        </div>
+
+        <fieldset class="layui-elem-field layui-field-title">
+        <legend>请求头部</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <select name="ApiMethod" lay-verify="required">
+            {{# layui.each(['GET','POST','PUT','DELETE'],function(index,item){ }}
+            <option value="{{ item }}" {{# if(item.trim()== d.ApiMethod.trim()){ }}selected{{# } }}>{{ item }}</option>
+            {{# }); }}
+            </select>
+        </div>
+
+
+
+        <fieldset class="layui-elem-field layui-field-title">
+        <legend>请求头部</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <table class="" id="header" lay-filter="header"></table>
+        </div>
+
+
+        <fieldset class="layui-elem-field layui-field-title">
+        <legend>请求参数</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <table class="layui-hide" id="param" lay-filter="param"></table>
+        </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="debug">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
-    </form>
+    </div>
 </script>
+
 <script type="text/html" id="log">
     <fieldset class="layui-elem-field">
         <legend>更新日志</legend>
@@ -300,86 +140,215 @@
         </div>
     </fieldset>
 </script>
-
-
-
-{/block}
-
-{block name='js'}
+<script type="text/html" id="btnBar">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="toolBar">
+  <div class="layui-btn-container">
+    <div class="layui-btn layui-btn-sm" lay-event="add">添加一行</div>
+    <div class="layui-btn layui-btn-sm" lay-event="del">添加文件上传</div>
+  </div>
+</script>
 <script>
-    layui.use(['laytpl', 'jquery'], function () {
-        var laytpl = layui.laytpl,
-            $ = layui.jquery;
-        $.get(window.location.href, function (response) {
-            if (response.code == 0) {
-                render(title.innerHTML, 'view_title', response.data);
-                render(detail.innerHTML, 'view_detail', response.data);
-                render(bug.innerHTML, 'view_bug', response.data);
-                render(log.innerHTML, 'view_log', response.data);
-                render(directory.innerHTML, 'view_directory', response.data);
+    layui.use(['form', 'table', 'element', 'element', 'laytpl', 'textool'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            element = layui.element,
+            textool = layui.textool,
+            laytpl = layui.laytpl;
+
+        var href = location.hash.replace(/^#\//, '');
+
+        $.ajax({
+            url: href,
+            type: 'POST',
+            dataType: 'json',
+            success: function (res) {
+                //接口信息
+                render(information.innerHTML, 'view_information', res.data);
+
+                render(debug.innerHTML, 'view_debug', res.data);
+
+
+                //更新日志信息
+                render(log.innerHTML, 'view_log', res.data);
+                //请求参数
+                var request = res.data.ApiParam;
+                //响应参数
+                var response = res.data.ApiReturn;
+
+
+                table.render({
+                    elem: '#request',
+                    data: request,
+                    skin: 'line',  //行边框风格
+                    cols: [[ //表头
+                        { field: 'name', title: '名称', sort: true },
+                        {
+                            field: 'type', title: '类型', templet: function (d) {
+                                return paramType(d.type);
+                            }
+                        },
+                        { field: 'default', title: '默认值' },
+                        { field: 'desc', title: '说明' },
+                    ]]
+                });
+                table.render({
+                    elem: '#response',
+                    data: response,
+                    skin: 'line',  //行边框风格
+                    cols: [[ //表头
+                        { field: 'name', title: '名称', sort: true },
+                        {
+                            field: 'type', title: '类型', templet: function (d) {
+                                return paramType(d.type);
+                            }
+                        },
+                        { field: 'default', title: '默认值' },
+                        { field: 'desc', title: '说明' },
+                    ]]
+                });
+
+                table.render({
+                    elem: '#param',
+                    data: request,
+                    // width: 1000,
+                    toolbar: '#toolBar',
+                    defaultToolbar: [{
+                        title: '提示',
+                        layEvent: 'LAYTABLE_TIPS',
+                        icon: 'layui-icon-tips'
+                    }],
+                    cols: [[ //表头
+                        {
+                            field: 'name', title: '参数', sort: true, templet: function (d) {
+                                return inputValue(d.name);
+                            }
+                        },
+                        {
+                            field: 'name', title: '参数值', templet: function (d) {
+                                return inputName(d);
+                            }
+                        },
+                        {
+                            field: 'type', title: '类型', templet: function (d) {
+                                return paramType(d.type);
+                            }
+                        },
+                        { field: 'desc', title: '操作', width: 80, toolbar: '#btnBar' },
+                    ]]
+                });
+
+
+                //监听工具条
+                table.on('tool(param)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del();
+                            layer.close(index);
+                        });
+                    }
+                });
+
+                //头工具栏事件
+                table.on('toolbar(param)', function (obj) {
+                    console.log(obj);
+                    switch (obj.event) {
+                        case 'add':
+                            createCell(obj.config.id, obj.config.index);
+                            break;
+                    };
+                });
+
+                textool.init({
+                    // 根据元素 id 值单独渲染，为空默认根据 class='layext-text-tool' 批量渲染
+                    eleId: null,
+                    // 批量设置输入框最大长度，可结合 eleId 单独设置最大长度
+                    maxlength: -1,
+                    // 初始化回调，无参
+                    initEnd: $.noop,
+                    // 显示回调，参数为当前输入框和工具条面板的 jQuery 对象
+                    showEnd: $.noop,
+                    // 隐藏回调，参数为当前输入框和工具条面板的 jQuery 对象
+                    hideEnd: $.noop,
+                    // 初始化展开，默认展开，否则收起
+                    initShow: true,
+                    // 启用指定工具模块，默认依次为字数统计、复制内容、重置内容、清空内容，按数组顺序显示
+                    tools: ['count', 'copy', 'reset', 'clear'],
+                    // 工具按钮提示类型，默认为 'title' 属性，可选 'laytips'，使用 layer 组件的吸附提示， 其他值不显示提示
+                    tipType: 'laytips',
+                    // 吸附提示背景颜色
+                    tipColor: '#01AAED',
+                    // 对齐方向，默认右对齐，可选左对齐 'left'
+                    align: 'left',
+                    // 工具条字体颜色
+                    color: '#666666',
+                    // 工具条背景颜色
+                    bgColor: '#FFFFFF',
+                    // 工具条边框颜色
+                    borderColor: '#E6E6E6',
+                    // 工具条附加样式类名
+                    className: '',
+                    // z-index
+                    zIndex: 19891014
+                });
+
+            },
+            error: function (xhr, textstatus, thrown) {
+                return layer.msg('Status:' + xhr.status + '，' + xhr.statusText + '，请稍后再试！');
             }
         });
 
+
+
+
+        //提交
+        form.on('submit(debug)', function (data) {
+            // //传值的个数
+            var length = $('#param').next().find('table>tbody').children().length;
+            var ajaxData = formatParams(data.field, length);
+
+
+            $.ajax({
+                url: data.field.ApiUrl,
+                type: data.field.ApiMethod,
+                data: ajaxData,
+                dataType: 'json',
+                success: function (result) {
+                    html =
+                        "<pre class='layui-code' lay-skin='notepad' lay-encode='true' style='margin: 0'>" +
+                        writeHtml(result) + "</pre>";
+                    var w = '';
+                    var h = '';
+                    if (w == null || w == '') {
+                        w = ($(window).width() * 0.75);
+                    };
+                    if (h == null || h == '') {
+                        h = ($(window).height() - 100);
+                    };
+                    layer.open({
+                        type: 1,
+                        area: [w + 'px', h + 'px'],
+                        fix: false, //不固定
+                        maxmin: true,
+                        shadeClose: true,
+                        shade: 0.4,
+                        title: 'title',
+                        content: html,
+                    });
+                }
+            })
+            return false;
+        });
         function render(tpl, _view, data) {
             var view = document.getElementById(_view);
             laytpl(tpl).render(data, function (html) {
                 view.innerHTML = html;
+                form.render();
             })
         }
-
-
-
-        var action = {
-            add: function () {
-                var field = this.data('field')
-                this.parents('.layui-input-block').find('table tbody').append("<tr>\n" +
-                    "                        <td><input name='" + field +
-                    "[name][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
-                    "                        <td><input name='" + field +
-                    "[value][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
-                    "                        <td><input name='" + field +
-                    "[type][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
-                    "                        <td>\n" +
-                    "                            <button class=\"layui-btn layui-btn-danger layui-btn-xs\"\n" +
-                    "                                    data-type=\"del\" \n" +
-                    "                                    type=\"button\">删除\n" +
-                    "                            </button>\n" +
-                    "                        </td>\n" +
-                    "                    </tr>");
-            },
-            add_file: function () {
-                var field = this.data('field')
-                this.parents('.layui-input-block').find('table tbody').append("<tr>\n" +
-                    " <td><input name='" + field +
-                    "[name][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
-                    " <td><input name='" + field +
-                    "[value][]' type=\"file\" class=\"layui-input upload_file\" value=''></td>\n" +
-                    " <td><input name='" + field +
-                    "[type][]' type=\"text\" class=\"layui-input\" value=''></td>\n" +
-                    " <td>\n" +
-                    " <button class=\"layui-btn layui-btn-danger layui-btn-xs\"\n" +
-                    "                                    data-type=\"del\" \n" +
-                    "                                    type=\" button\">删除\n" +
-                    " </button>\n" +
-                    " </td>\n" +
-                    " </tr>");
-            },
-            del: function () {
-                this.parents('tr').remove();
-            }
-        }
-
-        $('body').delegate('button', 'click', function () {
-            var type = $(this).data('type');
-            action[type] && action[type].call($(this));
-        });
-        // 格式化对象输出
-        function writeHtml(obj) {
-            var objStr = JSON.stringify(obj, null, 4);
-            var html = objStr.replace(/\n/g, '<br>').replace(/\s/g, '&nbsp');
-            return html
-        }
-        //请求方式加颜色
         window.method = function (param) {
             var method = {
                 'GET': 'class="layui-badge layui-bg-green"',
@@ -387,108 +356,104 @@
                 'PUT': 'class="layui-badge layui-bg-orange"',
                 'DELETE': 'class="layui-badge"',
             };
+
             if (!method[param]) {
                 return '-';
             }
             return '<span ' + method[param] + '>' + param + '</span>';
         }
-        layui.use(['form', 'layer'], function () {
-            var form = layui.form,
-                layer = layui.layer;
 
-            form.on('submit(debug)', function (data) {
-                $.each(data.field, function (index, item) {
-                    if (item == 'array') {
-                        var array_value = index.replace("type", "value")
-                        data.field[array_value] = JSON.parse(data.field[array_value]);
-                    }
-                });
-                var index = layer.load(0, {
-                    shade: false
-                }); //0代表加载的风格，支持0-2
-                $.ajax({
-                    url: "/doc/format_params",
-                    type: 'POST',
-                    data: data.field,
-                    success: function (response) {
-                        var token = localStorage.getItem('token');
-                        if (token != null) {
-                            response.params['token'] = token;
-                        }
-                        var processData = true;
-                        var contentType =
-                            'application/x-www-form-urlencoded; charset=UTF-8';
-                        var ajaxData = response.params;
-                        var files = document.querySelectorAll(".upload_file");
-                        if (files.length > 0) {
-                            var formData = new FormData();
-                            var params = response.params;
-                            console.log("params", params)
-                            for (const key in params) {
-                                formData.append(key, params[key])
-                            }
-                            for (var i = 0; i < files.length; i++) {
-                                var name = files[i].parentNode
-                                    .previousElementSibling
-                                    .firstChild.value;
-                                var fileObj = files[i].files[0];
-                                formData.append(name, fileObj);
-                            }
-                            ajaxData = formData;
-                            processData = false;
-                            contentType = false;
-                        }
-                        $.ajax({
-                            url: data.field.url,
-                            dataType: "json",
-                            type: data.field.method,
-                            headers: response.header,
-                            data: ajaxData,
-                            processData: processData,
-                            contentType: contentType,
-                            complete: function (XHR) {
-                                layer.close(index);
-                                var html = "";
-                                if (XHR.readyState == 4 && XHR.status ==
-                                    200) {
-                                    var result = XHR.responseJSON;
-                                    if (result.hasOwnProperty(
-                                            'token')) {
-                                        localStorage.setItem('token',
-                                            result.token);
-                                    }
-                                    html =
-                                        "<pre class='layui-code' lay-skin='notepad' lay-encode='true' style='margin: 0'>" +
-                                        writeHtml(result) + "</pre>";
-                                } else {
-                                    html = XHR.responseText;
-                                }
-                                var w = '';
-                                var h = '';
-                                if (w == null || w == '') {
-                                    w = ($(window).width() * 0.75);
-                                };
-                                if (h == null || h == '') {
-                                    h = ($(window).height() - 100);
-                                };
-                                layer.open({
-                                    type: 1,
-                                    area: [w + 'px', h + 'px'],
-                                    fix: false, //不固定
-                                    maxmin: true,
-                                    shadeClose: true,
-                                    shade: 0.4,
-                                    title: 'title',
-                                    content: html,
-                                });
-                            }
-                        })
 
-                    }
-                });
-                return false;
-            })
-        })
+        // 格式化对象输出
+        window.writeHtml = function (obj) {
+            var objStr = JSON.stringify(obj, null, 4);
+            var html = objStr.replace(/\n/g, '<br>').replace(/\s/g, '&nbsp');
+            return html
+        }
+
+        window.paramType = function (param) {
+            var method = {
+                'int': 'class="layui-badge layui-bg-green"',
+                'string': 'class="layui-badge layui-bg-blue"',
+                'number': 'class="layui-badge layui-bg-orange"',
+                'array': 'class="layui-badge"',
+                'file': 'class="layui-badge"',
+            };
+            if (!method[param]) {
+                return '-';
+            }
+            return '<span ' + method[param] + '>' + param + '</span>';
+        }
+        window.inputName = function (param) {
+            var method = {
+                'int': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
+                'string': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
+                'number': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
+                'array': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
+                'file': '<input type="file" name="params[value][]" lay-verify="required" class="layui-input upload_file" >',
+            };
+            if (!method[param.type]) {
+                return '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >';
+            }
+            return method[param.type];
+        }
+
+        window.inputValue = function (param) {
+            return '<input type="text" name="params[name][]"  value="' + param + '" lay-verify="required" class="layui-input layext-text-tool" >';
+        }
+        //操作
+        window.operationBtn = function (param) {
+            return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger delete">删除</button>';
+        }
+
+        //table 添加新行
+        window.createCell = function (id, index) {
+
+            var tbody = $('[lay-id="' + id + '"]').find('table>tbody');
+            var trLength = tbody.children().length;
+            var i = trLength - 1;
+            if (i < 0) {
+                i = 0;
+            }
+            console.log(tbody);
+            console.log(trLength);
+
+            var htmlstr = '<tr data-index="' + trLength + '" class="">' +
+                '<td data-field="name" data-key="' + trLength + '-0-0" data-content="" class="">' +
+                '<div class="layui-table-cell laytable-cell-' + trLength + '-0-0"><input type="text" name="params[name][]" value=""' +
+                'lay-verify="required" class="layui-input"></div>' +
+                '</td>' +
+                '<td data-field="name" data-key="' + trLength + '-0-1" data-content="" class="">' +
+                '<div class="layui-table-cell laytable-cell-' + trLength + '-0-1"><input type="text" name="params[value][]"' +
+                'lay-verify="required" class="layui-input"></div>' +
+                '</td>' +
+                '<td data-field="type" data-key="' + trLength + '-0-2" data-content="array" class="">' +
+                '<div class="layui-table-cell laytable-cell-' + trLength + '-0-2"><span class="layui-badge layui-bg-blue">string</span></div>' +
+                '</td>' +
+                '<td data-field="desc" data-key="' + trLength + '-0-3" data-off="true" class="">' +
+                '<div class="layui-table-cell laytable-cell-' + trLength + '-0-3"> <a class="layui-btn layui-btn-danger layui-btn-xs"' +
+                'lay-event="del">删除</a> </div>' +
+                '</td>' +
+                '</tr>';
+            tbody.append(htmlstr);
+            form.render();
+        }
+
+        //格式化参数
+        window.formatParams = function (param, i) {
+            var result = new Object();;
+            for (let index = 0; index < i; index++) {
+                var key = 'params[name][' + index + ']';
+                if (param.hasOwnProperty(key)) {
+                    var k = param['params[name][' + index + ']'];
+                    var v = param['params[value][' + index + ']'];
+                    result[k] = v;
+                }
+            }
+            return result;
+        }
+
+
+
     });
 </script>
-{/block}
