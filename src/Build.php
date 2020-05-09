@@ -32,7 +32,6 @@ class Build
         $controllerList = $this->config['controller'];
         $list = [];
         foreach ($controllerList as $i => $value) {
-
             foreach ($value['list'] as $k => $class) {
 
                 if (class_exists($class)) {
@@ -41,8 +40,8 @@ class Build
                     $doc = new Extractor();
                     # 解析类
                     $class_doc = $doc->parseClass($doc_str);
-                    $list[$i] = $class_doc;
-                    $list[$i]['class'] = $class;
+                    $list[$k] = $class_doc;
+                    $list[$k]['class'] = $class;
 
                     $method = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
                     # 过滤不需要解析的方法以及非当前类的方法(父级方法)
@@ -50,7 +49,7 @@ class Build
                     foreach ($method as $key => $action) {
                         if (!in_array($action->name, $filter_method) && $action->class === $class) {
                             if ($doc->parseAction($action))
-                                $list[$i]['action'][$key] = $doc->parseAction($action);
+                                $list[$k]['action'][$key] = $doc->parseAction($action);
                         }
                     }
                 }
@@ -76,8 +75,8 @@ class Build
     {
         $top = $this->config['controller'];
         $newMenu = [];
-
         $super = [];
+
         foreach ($apiMenu as $k => &$v) {
             $super[$k]['title'] = $v['ApiTitle'];
             $super[$k]['icon'] = 'fa fa-home';
@@ -93,14 +92,16 @@ class Build
         }
 
         foreach ($top as $key => &$value) {
-            $value['title'] = $value['name'];
+            $value['title'] = $top[0]['name'];
             $value['icon'] = 'fa fa-home';
             $value['href'] = '';
             $value['target'] = '_self';
-            if (!array_key_exists($key, $super)) {
-                break;
+            foreach ($value['list'] as $k => $list) {
+                if (!array_key_exists($k, $super)) {
+                    break;
+                }
+                $value['child'][] = $super[$k];
             }
-            $value['child'][] = $super[$key];
         }
         $jsonFilePath = file_build_path(__DIR__, 'view', 'api', 'init.json');
         $json_string = file_get_contents($jsonFilePath);
