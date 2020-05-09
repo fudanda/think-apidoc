@@ -192,8 +192,11 @@
                         },
                         { field: 'default', title: '默认值' },
                         { field: 'desc', title: '说明' },
-                    ]]
+                    ]],
+
                 });
+
+
                 table.render({
                     elem: '#response',
                     data: response,
@@ -207,7 +210,13 @@
                         },
                         { field: 'default', title: '默认值' },
                         { field: 'desc', title: '说明' },
-                    ]]
+                    ]], done: function (res, curr, count) {
+                        res.data.forEach(function (item, index) {
+                            if (item.type === "array") {
+                                $(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#FFB800");
+                            }
+                        })
+                    }
                 });
 
                 table.render({
@@ -342,6 +351,32 @@
             })
             return false;
         });
+
+
+
+        //监听行单击事件（双击事件为：rowDouble）
+        table.on('row(response)', function (obj) {
+            //点击单元格复制文本 复制名称列
+            var field = 'name';
+            var clipboard = new ClipboardJS('td[data-field="' + field + '"]', {
+                text: function (trigger) {
+                    //设置要复制的内容
+                    //js trigger.innerText
+                    return $(trigger).text();
+                }
+            });
+
+            clipboard.on('success', function (e) {
+                layer.msg((e.action == 'copy' ? '复制' : '剪切') + '成功');
+            });
+
+            clipboard.on('error', function (e) {
+                layer.msg((e.action == 'copy' ? '复制' : '剪切') + '失败');
+            });
+        });
+
+
+
         function render(tpl, _view, data) {
             var view = document.getElementById(_view);
             laytpl(tpl).render(data, function (html) {
@@ -386,14 +421,14 @@
         }
         window.inputName = function (param) {
             var method = {
-                'int': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
-                'string': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
-                'number': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
-                'array': '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >',
-                'file': '<input type="file" name="params[value][]" lay-verify="required" class="layui-input upload_file" >',
+                'int': '<input type="text" name="params[value][]"    value="' + param.default + '" lay-verify="required" class="layui-input" >',
+                'string': '<input type="text" name="params[value][]" value="' + param.default + '" lay-verify="required" class="layui-input" >',
+                'number': '<input type="text" name="params[value][]" value="' + param.default + '" lay-verify="required" class="layui-input" >',
+                'array': '<input type="text" name="params[value][]"  value="' + param.default + '" lay-verify="required" class="layui-input" >',
+                'file': '<input type="file" name="params[value][]"   value="' + param.default + '" lay-verify="required" class="layui-input upload_file" >',
             };
             if (!method[param.type]) {
-                return '<input type="text" name="params[value][]" lay-verify="required" class="layui-input" >';
+                return '<input type="text" name="params[value][]" value="' + param.default + '" lay-verify="required" class="layui-input" >';
             }
             return method[param.type];
         }

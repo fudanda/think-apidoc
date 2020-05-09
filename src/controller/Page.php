@@ -4,18 +4,14 @@ namespace Fdd\ApiDoc\controller;
 
 use think\Request;
 use think\facade\View;
+use Fdd\ApiDoc\BaseController;
 
-class Page
+class Page extends BaseController
 {
-    public function welcome(Request $request = null)
+    public function welcome()
     {
-        $this->view_path   = file_build_path(__DIR__, '..', 'view', 'page', '');
-
-        $config = [
-            'view_path' => $this->view_path,
-        ];
-        View::config($config);
-        View::assign('assetss', '/doc/assetss');
+        View::config($this->viewConfig);
+        View::assign('resource', '/doc/resource');
         return View::fetch('welcome');
     }
 }

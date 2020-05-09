@@ -26,6 +26,11 @@ class Extractor
     {
         $docComment = $this->getDocComment($object);
         $comment = $this->formatComment($this->paeseDocComment($docComment));
+
+        //没有对应字段不进行解析
+        if (empty($comment)) {
+            return false;
+        }
         mayBe(!isset($comment['ApiUrl']), !$comment['ApiUrl'])
             && $comment['ApiUrl'] = $this->buildUrl($object);
         mayBe(!isset($comment['ApiMethod']), !$comment['ApiMethod'])

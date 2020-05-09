@@ -130,4 +130,46 @@ if (!function_exists("http_curl")) {
             return $result;
         }
     }
+
+    if (!function_exists('fail')) {
+        /**
+         * 返回失败
+         *
+         * @param string $msg
+         * @param array $data
+         * @param integer $count
+         * @param integer $status
+         * @return string
+         */
+        function fail($msg = null, $status = 1)
+        {
+            is_null($msg) && $msg = '失败';
+            $result = array(
+                'code' => $status,
+                'msg' => $msg,
+            );
+            return json($result);
+        }
+    }
+    if (!function_exists('success')) {
+        /**
+         * 返回成功
+         *
+         * @param array $data
+         * @param integer $count
+         * @param [type] $msg
+         * @param integer $status
+         * @return string
+         */
+        function success($data = null, $msg = null,  $status = 0)
+        {
+            is_null($msg) && $msg = '成功';
+            $result       = [
+                'code'  => $status,
+                'msg'   => $msg,
+            ];
+            $result = array_merge($result, $data);
+            return json($result);
+        }
+    }
 }
