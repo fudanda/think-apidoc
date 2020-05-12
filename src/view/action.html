@@ -178,11 +178,12 @@
                 //响应参数
                 var response = res.data.ApiReturn;
 
-
                 table.render({
                     elem: '#request',
                     data: request,
                     skin: 'line',  //行边框风格
+                    page: false,
+                    limit: 100,
                     cols: [[ //表头
                         { field: 'name', title: '名称', sort: true },
                         {
@@ -201,6 +202,8 @@
                     elem: '#response',
                     data: response,
                     skin: 'line',  //行边框风格
+                    page: false,
+                    limit: 100,
                     cols: [[ //表头
                         { field: 'name', title: '名称', sort: true },
                         {
@@ -222,7 +225,8 @@
                 table.render({
                     elem: '#param',
                     data: request,
-                    // width: 1000,
+                    page: false,
+                    limit: 100,
                     toolbar: '#toolBar',
                     defaultToolbar: [{
                         title: '提示',
@@ -421,20 +425,20 @@
         }
         window.inputName = function (param) {
             var method = {
-                'int': '<input type="text" name="params[value][]"    value="' + param.default + '" lay-verify="required" class="layui-input" >',
-                'string': '<input type="text" name="params[value][]" value="' + param.default + '" lay-verify="required" class="layui-input" >',
-                'number': '<input type="text" name="params[value][]" value="' + param.default + '" lay-verify="required" class="layui-input" >',
-                'array': '<input type="text" name="params[value][]"  value="' + param.default + '" lay-verify="required" class="layui-input" >',
-                'file': '<input type="file" name="params[value][]"   value="' + param.default + '" lay-verify="required" class="layui-input upload_file" >',
+                'int': '<input type="text" name="params[value][]"    value="' + param.default + '"  class="layui-input" >',
+                'string': '<input type="text" name="params[value][]" value="' + param.default + '"  class="layui-input" >',
+                'number': '<input type="text" name="params[value][]" value="' + param.default + '"  class="layui-input" >',
+                'array': '<input type="text" name="params[value][]"  value="' + param.default + '"  class="layui-input" >',
+                'file': '<input type="file" name="params[value][]"   value="' + param.default + '"  class="layui-input upload_file" >',
             };
             if (!method[param.type]) {
-                return '<input type="text" name="params[value][]" value="' + param.default + '" lay-verify="required" class="layui-input" >';
+                return '<input type="text" name="params[value][]" value="' + param.default + '" class="layui-input" >';
             }
             return method[param.type];
         }
 
         window.inputValue = function (param) {
-            return '<input type="text" name="params[name][]"  value="' + param + '" lay-verify="required" class="layui-input layext-text-tool" >';
+            return '<input type="text" name="params[name][]"  value="' + param + '"  class="layui-input layext-text-tool" >';
         }
         //操作
         window.operationBtn = function (param) {
@@ -456,11 +460,11 @@
             var htmlstr = '<tr data-index="' + trLength + '" class="">' +
                 '<td data-field="name" data-key="' + trLength + '-0-0" data-content="" class="">' +
                 '<div class="layui-table-cell laytable-cell-' + trLength + '-0-0"><input type="text" name="params[name][]" value=""' +
-                'lay-verify="required" class="layui-input"></div>' +
+                ' class="layui-input"></div>' +
                 '</td>' +
                 '<td data-field="name" data-key="' + trLength + '-0-1" data-content="" class="">' +
                 '<div class="layui-table-cell laytable-cell-' + trLength + '-0-1"><input type="text" name="params[value][]"' +
-                'lay-verify="required" class="layui-input"></div>' +
+                ' class="layui-input"></div>' +
                 '</td>' +
                 '<td data-field="type" data-key="' + trLength + '-0-2" data-content="array" class="">' +
                 '<div class="layui-table-cell laytable-cell-' + trLength + '-0-2"><span class="layui-badge layui-bg-blue">string</span></div>' +
