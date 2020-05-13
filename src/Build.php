@@ -77,7 +77,7 @@ class Build
         $super = [];
         foreach ($apiMenu as $k => &$v) {
             $super[$k]['title'] = $v['ApiTitle'];
-            $super[$k]['icon'] = 'fa fa-home';
+            $super[$k]['icon'] = 'fa fa-circle';
             $super[$k]['href'] = '';
             $super[$k]['target'] = '_self';
             $action = array_values($v['action']);
@@ -85,7 +85,7 @@ class Build
             foreach ($action as $i => $value) {
 
                 $newMenu[$i]['title'] = $value['ApiTitle'];
-                $newMenu[$i]['icon']   = 'fa fa-home';
+                $newMenu[$i]['icon']   = 'fa fa-plug';
                 $newMenu[$i]['href'] = "action?name={$value['href']}";
                 $newMenu[$i]['target'] = '_self';
             }
@@ -94,7 +94,7 @@ class Build
         }
         foreach ($top as $key => &$value) {
             $value['title'] = $top[0]['name'];
-            $value['icon'] = 'fa fa-home';
+            $value['icon'] = 'fa fa-circle';
             $value['href'] = '';
             $value['target'] = '_self';
 
