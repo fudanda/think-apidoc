@@ -55,7 +55,7 @@
     <fieldset class="layui-elem-field layui-field-title">
     <legend>接口描述：</legend>
     </fieldset>
-    <blockquote class="layui-elem-quote">新闻列表</blockquote>
+    <blockquote class="layui-elem-quote">{{ d.ApiDesc }}</blockquote>
 
     <fieldset class="layui-elem-field layui-field-title">
     <legend>请求参数</legend>
@@ -170,7 +170,6 @@
 
                 render(debug.innerHTML, 'view_debug', res.data);
 
-
                 //更新日志信息
                 render(log.innerHTML, 'view_log', res.data);
                 //请求参数
@@ -236,7 +235,7 @@
                     cols: [[ //表头
                         {
                             field: 'name', title: '参数', sort: true, templet: function (d) {
-                                return inputValue(d.name);
+                                return inputValue(d);
                             }
                         },
                         {
@@ -424,6 +423,9 @@
             return '<span ' + method[param] + '>' + param + '</span>';
         }
         window.inputName = function (param) {
+            if (param.name == ":id") {
+                return '<input type="text" name="params[value][]" value="" class="layui-input" >';
+            }
             var method = {
                 'int': '<input type="text" name="params[value][]"    value="' + param.default + '"  class="layui-input" >',
                 'string': '<input type="text" name="params[value][]" value="' + param.default + '"  class="layui-input" >',
@@ -438,7 +440,10 @@
         }
 
         window.inputValue = function (param) {
-            return '<input type="text" name="params[name][]"  value="' + param + '"  class="layui-input layext-text-tool" >';
+            if (param.name == ":id") {
+                return '<input type="text" name="params[name][]"  value=""  class="layui-input layext-text-tool" >';
+            }
+            return '<input type="text" name="params[name][]"  value="' + param.name + '"  class="layui-input layext-text-tool" >';
         }
         //操作
         window.operationBtn = function (param) {

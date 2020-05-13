@@ -74,28 +74,30 @@ class Build
     public function formattingMenu($apiMenu = [])
     {
         $top = $this->config['controller'];
-        $newMenu = [];
         $super = [];
-
         foreach ($apiMenu as $k => &$v) {
             $super[$k]['title'] = $v['ApiTitle'];
             $super[$k]['icon'] = 'fa fa-home';
             $super[$k]['href'] = '';
             $super[$k]['target'] = '_self';
-            foreach ($v['action'] as $i => $value) {
+            $action = array_values($v['action']);
+            $newMenu = [];
+            foreach ($action as $i => $value) {
+
                 $newMenu[$i]['title'] = $value['ApiTitle'];
                 $newMenu[$i]['icon']   = 'fa fa-home';
                 $newMenu[$i]['href'] = "action?name={$value['href']}";
                 $newMenu[$i]['target'] = '_self';
             }
-            $super[$k]['child'] = $newMenu;
-        }
 
+            $super[$k]['child'] = array_values($newMenu);
+        }
         foreach ($top as $key => &$value) {
             $value['title'] = $top[0]['name'];
             $value['icon'] = 'fa fa-home';
             $value['href'] = '';
             $value['target'] = '_self';
+
             foreach ($value['list'] as $k => $list) {
                 if (!array_key_exists($k, $super)) {
                     break;
@@ -103,6 +105,7 @@ class Build
                 $value['child'][] = $super[$k];
             }
         }
+
         $jsonFilePath = file_build_path(__DIR__, 'view', 'api', 'init.json');
         $json_string = file_get_contents($jsonFilePath);
         // 用参数true把JSON字符串强制转成PHP数组
