@@ -161,7 +161,7 @@ if (!function_exists("http_curl")) {
          * @param integer $status
          * @return string
          */
-        function success($data = null, $msg = null,  $status = 0)
+        function success($data = [], $msg = null,  $status = 0)
         {
             is_null($msg) && $msg = '成功';
             $result       = [
