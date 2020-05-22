@@ -2,7 +2,7 @@
 
 namespace Fdd\ApiDoc;
 
-use think\facade\View;
+use think\facade\Config;
 
 /**
  * 控制器基础类
@@ -37,6 +37,7 @@ abstract class BaseController
      */
     protected $viewPath = '';
 
+    protected $apiConfig = [];
 
     /**
      * 构造方法
@@ -51,6 +52,8 @@ abstract class BaseController
             'view_path' => $this->viewPath,
         ];
         $this->viewConfig =  $config;
+
+        $this->apiConfig = Config::get('apiconfig');
     }
 
     // 初始化

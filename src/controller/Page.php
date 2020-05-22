@@ -12,6 +12,10 @@ class Page extends BaseController
     {
         View::config($this->viewConfig);
         View::assign('resource', '/doc/resource');
+
+        $config = $this->apiConfig;
+        View::assign('code', $config['code']);
+        View::assign('document', $config['document']);
         return View::fetch('welcome');
     }
 }

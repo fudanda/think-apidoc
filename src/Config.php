@@ -10,22 +10,11 @@ return [
     'maintenance' => false, //是否开启文档
     'jwtkey' => 'https://github.com/fudanda/think-apidoc', //jwt密钥
     'document'  => [
-        "explain" => [
-            'name' => '说明',
-            'list' => [
-                '文档' => ['自动生成'],
-            ]
-        ],
-        "code"    => [
-            'name' => '返回信息',
-            'list' => [
-                'code'  => '【0成功】【1失败】【3Token验证失败,重新登录】',
-                'msg'   => '提示信息',
-                'count' => '分页时数据的总数量',
-                'data'  => '数据',
-                'jwt'   => 'Token信息,用于验证接口请求',
-            ]
-        ],
+        '1' => '说明'
+    ],
+    "code"    => [
+        '0' => '成功',
+        '500' => '失败'
     ],
     // 全局header
     'header' => [],

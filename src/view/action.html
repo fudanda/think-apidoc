@@ -73,7 +73,7 @@
 
     <div class="layui-form">
         <fieldset class="layui-elem-field layui-field-title">
-        <legend>请求头部</legend>
+        <legend>请求地址</legend>
         </fieldset>
         <div class="layui-form-item">
             <input type="text" name="ApiUrl" placeholder="请输入接口地址"
@@ -159,11 +159,11 @@
             laytpl = layui.laytpl;
 
         var href = location.hash.replace(/^#\//, '');
-
         $.ajax({
             url: href,
             type: 'POST',
             dataType: 'json',
+
             success: function (res) {
                 //接口信息
                 render(information.innerHTML, 'view_information', res.data);
@@ -322,13 +322,20 @@
             var length = $('#param').next().find('table>tbody').children().length;
             var ajaxData = formatParams(data.field, length);
 
+            var token = localStorage.getItem("mytoken");
 
             $.ajax({
                 url: data.field.ApiUrl,
                 type: data.field.ApiMethod,
                 data: ajaxData,
                 dataType: 'json',
+                headers: { Token: token },
                 success: function (result) {
+
+                    if (result.hasOwnProperty('token')) {
+                        localStorage.setItem("mytoken", result.token);
+                    }
+
                     html =
                         "<pre class='layui-code' lay-skin='notepad' lay-encode='true' style='margin: 0'>" +
                         writeHtml(result) + "</pre>";
